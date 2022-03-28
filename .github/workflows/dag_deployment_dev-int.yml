@@ -1,0 +1,26 @@
+name: Dev-int DAG Deployment
+on:
+  push:
+    branches:
+      - dev-int
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v2
+
+      - name: linting
+        id: lint
+        run: |
+          pip install pylint-airflow
+          pylint --load-plugins=pylint_airflow ./dags/**/*.py
+
+      - name: DAG image creation and airflow deployment
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: ${{ secrets.DEV_RELEASE_NAME }}/airflow:deploy-ci-${{ github.run_number }}
+          username: _
+          password: ${{ secrets.SA_PASS_KEY }}
+          registry: registry.astronomer.condenast.io

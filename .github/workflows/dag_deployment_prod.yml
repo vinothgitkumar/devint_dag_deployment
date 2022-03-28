@@ -1,0 +1,16 @@
+name: Production DAG Deployment
+on: workflow_dispatch
+jobs:
+  branch_creation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v2
+
+      - name: DAG image creation and airflow deployment
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: ${{ secrets.PROD_RELEASE_NAME }}/airflow:deploy-ci-${{ github.run_number }}
+          username: _
+          password: ${{ secrets.SA_PASS_KEY }}
+          registry: registry.astronomer.condenast.io
