@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - staging
+      - dev-int
 
 jobs:
   dag_deployment:
@@ -13,6 +14,15 @@ jobs:
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.G_TOKEN }}
+
+      - name: Delete branch in specific repository with a specific owner
+        uses: dawidd6/action-delete-branch@v3
+        with:
+          github_token: ${{ secrets.G_TOKEN }}
+          #owner: specific-owner
+          #repository: specific-repository
+          branches: production
+          #suffix: -done
           
   #    - name: DAG image creation and airflow deployment
   #      uses: elgohr/Publish-Docker-Github-Action@master
@@ -41,9 +51,9 @@ jobs:
           git tag
           # current_tag=`git tag | tail -n1`
           current_tag=`git tag --sort version:refname | tail -n1`
-          vertion_tag=`$current_tag + $version_increament`
+          vertion_tag=`$current_tag + 0.1`
           #echo "vertion_tag=$current_tag + $version_increament" >> $GITHUB_ENV
-          echo "::set-output name=TAG_NAME::$vertion_tag"
+          echo "::set-output name=TAG_NAME::$(echo $vertion_tag)"
 
       - name: tagging
         uses: rickstaa/action-create-tag@v1
