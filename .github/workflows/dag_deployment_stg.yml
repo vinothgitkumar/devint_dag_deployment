@@ -40,16 +40,16 @@ jobs:
           git tag
           # current_tag=`git tag | tail -n1`
           current_tag=`git tag --sort version:refname | tail -n1`
-          echo $current_tag
+          #vertion_tag=`$current_tag + $version_increament`
           echo "vertion_tag=$current_tag + $version_increament" >> $GITHUB_ENV
           git tag $vertion_tag
-          git push origin staging
+          git push origin staging --tags
 
-      - name: tagging
-        uses: rickstaa/action-create-tag@v1
-        with:
-          tag: "latest"
-          message: "Latest release"
+      #- name: tagging
+      #  uses: rickstaa/action-create-tag@v1
+      #  with:
+      #    tag: "latest"
+      #    message: "Latest release"
 
       #- name: Production branch creation
         #run: |
