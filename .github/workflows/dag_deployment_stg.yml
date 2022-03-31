@@ -5,22 +5,22 @@ on:
       - staging
 
 jobs:
-  dag_deployment:
-    name: DAG Deployment
-    runs-on: ubuntu-latest
-    steps:
-      - name: Code Checkout
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.G_TOKEN }}
-          
-      - name: DAG image creation and airflow deployment
-        uses: elgohr/Publish-Docker-Github-Action@master
-        with:
-          name: ${{ secrets.STG_RELEASE_NAME }}/airflow:deploy-ci-${{ github.run_number }}
-          username: _
-          password: ${{ secrets.SA_PASS_KEY }}
-          registry: registry.astronomer.condenast.io
+  #dag_deployment:
+  #  name: DAG Deployment
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - name: Code Checkout
+  #      uses: actions/checkout@v2
+  #      with:
+  #        token: ${{ secrets.G_TOKEN }}
+  #        
+  #    - name: DAG image creation and airflow deployment
+  #      uses: elgohr/Publish-Docker-Github-Action@master
+  #      with:
+  #        name: ${{ secrets.STG_RELEASE_NAME }}/airflow:deploy-ci-${{ github.run_number }}
+  #        username: _
+  #        password: ${{ secrets.SA_PASS_KEY }}
+  #        registry: registry.astronomer.condenast.io
           
   branch_creation:
     runs-on: ubuntu-latest
@@ -39,10 +39,13 @@ jobs:
           git tag
           # current_tag=`git tag | tail -n1`
           current_tag=`git tag --sort version:refname | tail -n1`
+          echo "$current_tag"
           echo "vertion_tag=$current_tag + $version_increament" >> $GITHUB_ENV
+          git tag $vertion_tag
+          git push origin staging
 
-      - name: Production branch creation
-        run: |
-          git branch
-          git checkout -b production $vertion_tag
-          git push origin production
+      #- name: Production branch creation
+        #run: |
+          #git branch
+          #git checkout -b production $vertion_tag
+          #git push origin production
