@@ -46,20 +46,14 @@ jobs:
       - name: Tag Creation
         id: tag_version
         run: |
-          version_increament=0.1
-          git branch
-          git tag
-          # current_tag=`git tag | tail -n1`
-          current_tag=`git tag --sort version:refname | tail -n1`
-          vertion_tag=`$current_tag + 0.1`
-          #echo "vertion_tag=$current_tag + $version_increament" >> $GITHUB_ENV
-          echo "::set-output name=TAG_NAME::$(echo $vertion_tag)"
+          chmod +x ./scripts/tag_creation.sh
+          sh scripts/tag_creation.sh
 
-      - name: tagging
-        uses: rickstaa/action-create-tag@v1
-        with:
-          tag: ${{ steps.tag_version.outputs.TAG_NAME }}
-          message: "latest tag created"
+      #- name: tagging
+      #  uses: rickstaa/action-create-tag@v1
+      #  with:
+      #    tag: ${{ steps.tag_version.outputs.TAG_NAME }}
+      #    message: "latest tag created"
 
       #- name: Production branch creation
         #run: |
