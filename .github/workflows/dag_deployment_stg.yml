@@ -5,15 +5,15 @@ on:
       - staging
 
 jobs:
-  #dag_deployment:
-  #  name: DAG Deployment
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - name: Code Checkout
-  #      uses: actions/checkout@v2
-  #      with:
-  #        token: ${{ secrets.G_TOKEN }}
-  #        
+  dag_deployment:
+    name: DAG Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.G_TOKEN }}
+          
   #    - name: DAG image creation and airflow deployment
   #      uses: elgohr/Publish-Docker-Github-Action@master
   #      with:
