@@ -37,7 +37,8 @@ jobs:
           version_increament=0.1
           git branch
           git tag
-          current_tag=`git tag | tail -n1`
+          # current_tag=`git tag | tail -n1`
+          current_tag=`git tag --sort version:refname | tail -n1`
           echo "vertion_tag=$current_tag + $version_increament" >> $GITHUB_ENV
 
       - name: Production branch creation
