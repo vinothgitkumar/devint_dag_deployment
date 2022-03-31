@@ -18,6 +18,7 @@ jobs:
           pylint --load-plugins=pylint_airflow ./dags/**/*.py
 
       - name: DAG image creation and airflow deployment
+        if: always()
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: ${{ secrets.DEV_RELEASE_NAME }}/airflow:deploy-ci-${{ github.run_number }}
