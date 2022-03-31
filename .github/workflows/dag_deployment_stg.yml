@@ -39,7 +39,7 @@ jobs:
           git tag
           # current_tag=`git tag | tail -n1`
           current_tag=`git tag --sort version:refname | tail -n1`
-          echo "$current_tag"
+          echo $current_tag
           echo "vertion_tag=$current_tag + $version_increament" >> $GITHUB_ENV
           git tag $vertion_tag
           git push origin staging
