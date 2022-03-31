@@ -14,15 +14,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.G_TOKEN }}
-
-      - name: Delete branch in specific repository with a specific owner
-        uses: dawidd6/action-delete-branch@v3
-        with:
-          github_token: ${{ secrets.G_TOKEN }}
-          #owner: specific-owner
-          #repository: specific-repository
-          branches: production
-          #suffix: -done
           
   #    - name: DAG image creation and airflow deployment
   #      uses: elgohr/Publish-Docker-Github-Action@master
