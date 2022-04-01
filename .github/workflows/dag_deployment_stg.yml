@@ -34,27 +34,23 @@ jobs:
           token: ${{ secrets.G_TOKEN }}
           fetch-depth: 0
 
-      - name: tag creation
+      - name: Tag Versioning
+        id: tag_creation
         run: |
           version_increament=0.1
           current_tag=`git tag --sort version:refname | tail -n1`
           echo "$current_tag + $version_increament" | bc
           echo $version_tag > ./version_tag.txt
           cat ./version_tag.txt
-          echo "::set-output name=tag_version::$(cat ./version_tag.txt)"
+          echo "::set-output name=TAG_NAME::$(cat ./version_tag.txt)"
           rm -rf ./version_tag.txt
           ls -l
-      #- name: Tag Creation
-      #  id: tag_version
-      #  run: |
-      #    chmod +x ./scripts/tag_creation.sh
-      #    sh scripts/tag_creation.sh
 
-      #- name: tagging
-      #  uses: rickstaa/action-create-tag@v1
-      #  with:
-      #    tag: ${{ steps.tag_version.outputs.TAG_NAME }}
-      #    message: "latest tag created"
+      - name: tagging
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ${{ steps.tag_creation.outputs.TAG_NAME }}
+          message: "latest tag created"
 
       #- name: Production branch creation
         #run: |
