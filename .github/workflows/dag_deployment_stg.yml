@@ -38,10 +38,10 @@ jobs:
         run: |
           version_increament=0.1
           current_tag=`git tag --sort version:refname | tail -n1`
-          echo "$current_tag + $version_increament" > ./vertion_tag.txt
+          echo "$current_tag + $version_increament" > ./version_tag.txt
           cat ./version_tag.txt
-          echo "::set-output name=tag_version::$(cat ./vertion_tag.txt)"
-          rm -rf ./vertion_tag.txt
+          echo "::set-output name=tag_version::$(cat ./version_tag.txt)"
+          rm -rf ./version_tag.txt
       #- name: Tag Creation
       #  id: tag_version
       #  run: |
