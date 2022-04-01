@@ -39,7 +39,7 @@ jobs:
         run: |
           version_increament=0.1
           current_tag=`git tag --sort version:refname | tail -n1`
-          echo "$current_tag + $version_increament" | bc
+          version_tag=$(echo "$current_tag + $version_increament" | bc)
           echo $version_tag > ./version_tag.txt
           date
           cat ./version_tag.txt
