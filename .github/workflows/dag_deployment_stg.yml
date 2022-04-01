@@ -33,12 +33,6 @@ jobs:
           token: ${{ secrets.G_TOKEN }}
           fetch-depth: 0
 
-      - name: Delete branch in specific repository with a specific owner
-        uses: dawidd6/action-delete-branch@v3
-        with:
-          github_token: ${{ secrets.G_TOKEN }}
-          branches: production
-
       - name: Tag Versioning
         id: tag_creation
         run: |
