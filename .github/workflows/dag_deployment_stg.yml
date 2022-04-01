@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - staging
-      - dev-int
 
 jobs:
   dag_deployment:
