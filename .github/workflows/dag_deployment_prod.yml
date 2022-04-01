@@ -1,7 +1,7 @@
 name: Production DAG Deployment
 on: workflow_dispatch
 jobs:
-  branch_creation:
+  prod dag deployment:
     runs-on: ubuntu-latest
     steps:
       - name: Code Checkout
