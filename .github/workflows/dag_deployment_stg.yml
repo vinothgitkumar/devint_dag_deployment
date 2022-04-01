@@ -6,14 +6,14 @@ on:
       - dev-int
 
 jobs:
-  dag_deployment:
-    name: DAG Deployment
-    runs-on: ubuntu-latest
-    steps:
-      - name: Code Checkout
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.G_TOKEN }}
+  #dag_deployment:
+  #  name: DAG Deployment
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - name: Code Checkout
+  #      uses: actions/checkout@v2
+  #      with:
+  #        token: ${{ secrets.G_TOKEN }}
           
   #    - name: DAG image creation and airflow deployment
   #      uses: elgohr/Publish-Docker-Github-Action@master
@@ -25,8 +25,8 @@ jobs:
           
   branch_creation:
     runs-on: ubuntu-latest
-    environment: 'prod-branch-creation'
-    needs: dag_deployment
+    #environment: 'prod-branch-creation'
+    #needs: dag_deployment
     steps:
       - name: Code Checkout
         uses: actions/checkout@v2
@@ -38,7 +38,7 @@ jobs:
         run: |
           version_increament=0.1
           current_tag=`git tag --sort version:refname | tail -n1`
-          version_tag=$current_tag + $version_increament | bc
+          echo "$current_tag + $version_increament" | bc
           echo $version_tag > ./version_tag.txt
           cat ./version_tag.txt
           echo "::set-output name=tag_version::$(cat ./version_tag.txt)"
