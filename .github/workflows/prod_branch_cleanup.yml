@@ -1,4 +1,4 @@
-name: Prod branches deletion
+name: Prod branch deletion
 on:
   push:
     branches:
