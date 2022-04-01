@@ -2,7 +2,7 @@ name: Dev-int DAG Deployment
 on:
   push:
     branches:
-      - dev-int1
+      - dev-int
 
 jobs:
   build:
