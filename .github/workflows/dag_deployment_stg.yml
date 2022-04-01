@@ -6,33 +6,39 @@ on:
       - dev-int
 
 jobs:
-  #dag_deployment:
-  #  name: DAG Deployment
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - name: Code Checkout
-  #      uses: actions/checkout@v2
-  #      with:
-  #        token: ${{ secrets.G_TOKEN }}
-          
-  #    - name: DAG image creation and airflow deployment
-  #      uses: elgohr/Publish-Docker-Github-Action@master
-  #      with:
-  #        name: ${{ secrets.STG_RELEASE_NAME }}/airflow:deploy-ci-${{ github.run_number }}
-  #        username: _
-  #        password: ${{ secrets.SA_PASS_KEY }}
-  #        registry: registry.astronomer.condenast.io
+  dag_deployment:
+    name: DAG Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.G_TOKEN }}
+         
+      - name: DAG image creation and airflow deployment
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: ${{ secrets.STG_RELEASE_NAME }}/airflow:deploy-ci-${{ github.run_number }}
+          username: _
+          password: ${{ secrets.SA_PASS_KEY }}
+          registry: registry.astronomer.condenast.io
           
   branch_creation:
     runs-on: ubuntu-latest
-    #environment: 'prod-branch-creation'
-    #needs: dag_deployment
+    environment: 'prod-branch-creation'
+    needs: dag_deployment
     steps:
       - name: Code Checkout
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.G_TOKEN }}
           fetch-depth: 0
+
+      - name: Delete branch in specific repository with a specific owner
+        uses: dawidd6/action-delete-branch@v3
+        with:
+          github_token: ${{ secrets.G_TOKEN }}
+          branches: production
 
       - name: Tag Versioning
         id: tag_creation
@@ -58,9 +64,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
         with:
           branch: 'production'
-
-      #- name: Production branch creation
-        #run: |
-          #git branch
-          #git checkout -b production $vertion_tag
-          #git push origin production

@@ -13,13 +13,6 @@ jobs:
         with:
           token: ${{ secrets.G_TOKEN }}
 
-      - name: Delete merged branch
-        uses: koj-co/delete-merged-action@master
-        with:
-          branches: "production"
-        env:
-          GITHUB_TOKEN: "${{ secrets.G_TOKEN }}"
-
       - name: Delete branch in specific repository with a specific owner
         uses: dawidd6/action-delete-branch@v3
         with:
