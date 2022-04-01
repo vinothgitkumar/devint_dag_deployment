@@ -53,7 +53,7 @@ jobs:
           message: "latest tag created"
 
       - name: create production branch
-        uses: satya-500/create-branch@v1.0
+        uses: satya-500/create-branch-from-tag@v1.0
         env:
           GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
         with:
