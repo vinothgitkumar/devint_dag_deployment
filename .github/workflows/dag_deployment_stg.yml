@@ -58,7 +58,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
         with:
           branch: staging
-          tag: tags/${{ steps.tag_creation.outputs.TAG_NAME }}
+          from: tags/${{ steps.tag_creation.outputs.TAG_NAME }}
 
       #- name: Production branch creation
         #run: |
