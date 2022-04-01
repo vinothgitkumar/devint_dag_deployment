@@ -52,6 +52,14 @@ jobs:
           tag: ${{ steps.tag_creation.outputs.TAG_NAME }}
           message: "latest tag created"
 
+      - name: create production branch
+        uses: satya-500/create-branch@v1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
+        with:
+          branch: staging
+          tag: tags/${{ steps.tag_creation.outputs.TAG_NAME }}
+
       #- name: Production branch creation
         #run: |
           #git branch
