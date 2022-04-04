@@ -33,23 +33,42 @@ jobs:
           token: ${{ secrets.G_TOKEN }}
           fetch-depth: 0
 
+      #- name: Tag Versioning
+      #  id: tag_creation
+      #  run: |
+      #    version_increament=0.1
+      #    current_tag=`git tag --sort version:refname | tail -n1`
+      #    version_tag=$(echo "$current_tag + $version_increament" | bc)
+      #    echo $version_tag > ./version_tag.txt
+      #    date
+      #    cat ./version_tag.txt
+      #    echo "::set-output name=TAG_NAME::$(cat ./version_tag.txt)"
+      #    ls -l
+
+      - name: Current tag version
+        id: current_tag
+        run: |
+          current_tag=`git tag --sort version:refname | tail -n1`
+          echo "::set-output name=CUR_TAG::$(git tag --sort version:refname | tail -n1)"
+
       - name: Tag Versioning
         id: tag_creation
         run: |
-          version_increament=0.1
-          current_tag=`git tag --sort version:refname | tail -n1`
-          version_tag=$(echo "$current_tag + $version_increament" | bc)
-          echo $version_tag > ./version_tag.txt
-          date
-          cat ./version_tag.txt
-          echo "::set-output name=TAG_NAME::$(cat ./version_tag.txt)"
-          ls -l
+          chmod +x ./scripts/tag_major_minor.sh
+          ./scripts/tag_major_minor.sh ${{ steps.current_tag.outputs.CUR_TAG }} feature
+          echo "::set-output name=TAG_NAME::$(cat ./new_version.txt)"
 
       - name: tagging
         uses: rickstaa/action-create-tag@v1
         with:
           tag: ${{ steps.tag_creation.outputs.TAG_NAME }}
           message: "latest tag created"
+
+      - name: Delete Production Branch
+        uses: dawidd6/action-delete-branch@v3
+        with:
+          github_token: ${{ secrets.G_TOKEN }}
+          branches: production
 
       - name: create production branch
         uses: peterjgrainger/action-create-branch@v2.0.1
