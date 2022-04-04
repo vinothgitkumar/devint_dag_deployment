@@ -29,4 +29,4 @@ fi
 
 # echo the new version number
 #echo "new version: ${major}.${minor}.${build}"
-echo "new version: ${major}.${minor}" > ./new_version.txt
+echo "${major}.${minor}" > ./new_version.txt
