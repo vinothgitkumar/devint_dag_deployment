@@ -22,7 +22,7 @@ jobs:
       - name: linting1
         uses: benc-uk/workflow-dispatch@v1
         with:
-          workflow: linting1234
+          workflow: linting1
           repo: vinothgitkumar/devint_dag_deployment
           ref: testing
           token: ${{ secrets.G_TOKEN }}

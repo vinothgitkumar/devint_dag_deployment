@@ -10,3 +10,4 @@ jobs:
       - name: linting action
         run: | 
           echo "Linting happens here"
+          git checkout main
