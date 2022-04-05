@@ -19,11 +19,27 @@ jobs:
           ref: testing
           token: ${{ secrets.G_TOKEN }}
 
-      - name: DAG image creation and airflow deployment
-        if: always()
-        uses: elgohr/Publish-Docker-Github-Action@master
+      - name: linting1
+        uses: benc-uk/workflow-dispatch@v1
         with:
-          name: ${{ secrets.DEV_RELEASE_NAME }}/airflow:deploy-ci-${{ github.run_number }}
-          username: _
-          password: ${{ secrets.SA_PASS_KEY }}
-          registry: registry.astronomer.condenast.io
+          workflow: linting1
+          repo: vinothgitkumar/devint_dag_deployment
+          ref: testing
+          token: ${{ secrets.G_TOKEN }}
+
+      - name: linting2
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: linting2
+          repo: vinothgitkumar/devint_dag_deployment
+          ref: testing
+          token: ${{ secrets.G_TOKEN }}
+
+      #- name: DAG image creation and airflow deployment
+      #  if: always()
+      #  uses: elgohr/Publish-Docker-Github-Action@master
+      #  with:
+      #    name: ${{ secrets.DEV_RELEASE_NAME }}/airflow:deploy-ci-${{ github.run_number }}
+      #    username: _
+      #    password: ${{ secrets.SA_PASS_KEY }}
+      #    registry: registry.astronomer.condenast.io

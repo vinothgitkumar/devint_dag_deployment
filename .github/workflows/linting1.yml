@@ -1,0 +1,12 @@
+name: linting1
+on: [workflow_dispatch]
+jobs:
+  dev-linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout-code
+        uses: actions/checkout@v2
+
+      - name: linting action
+        run: | 
+          echo "Linting happens here"
