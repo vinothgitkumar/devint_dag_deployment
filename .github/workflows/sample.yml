@@ -19,7 +19,7 @@ jobs:
           ref: testing
           token: ${{ secrets.G_TOKEN }}
 
-      - name: linting1
+      - name: linting12345
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: linting1
@@ -28,6 +28,7 @@ jobs:
           token: ${{ secrets.G_TOKEN }}
 
       - name: linting2
+        if: success()
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: linting2
