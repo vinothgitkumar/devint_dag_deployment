@@ -1,0 +1,35 @@
+name: Dev Deployment
+on:
+  push:
+    branches:
+      - testing
+
+jobs:
+  dev-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout-code
+        uses: actions/checkout@v2
+
+      - name: linting
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: linting
+          repo: vinothgitkumar/devint_dag_deployment
+          ref: testing
+          token: ${{ secrets.G_TOKEN }}
+
+        id: lint
+        run: |
+          #pip install pylint-airflow
+          #pylint --load-plugins=pylint_airflow ./dags/**/*.py
+          echo "Linting will be performed here"
+
+      - name: DAG image creation and airflow deployment
+        if: always()
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: ${{ secrets.DEV_RELEASE_NAME }}/airflow:deploy-ci-${{ github.run_number }}
+          username: _
+          password: ${{ secrets.SA_PASS_KEY }}
+          registry: registry.astronomer.condenast.io

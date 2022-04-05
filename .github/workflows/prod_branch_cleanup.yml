@@ -2,7 +2,7 @@ name: Prod branch deletion
 on:
   push:
     branches:
-      - main
+      - branch-deletion-used-in-stg-workflow
 
 jobs:
   branch-deletion:
