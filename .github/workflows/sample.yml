@@ -19,12 +19,6 @@ jobs:
           ref: testing
           token: ${{ secrets.G_TOKEN }}
 
-        id: lint
-        run: |
-          #pip install pylint-airflow
-          #pylint --load-plugins=pylint_airflow ./dags/**/*.py
-          echo "Linting will be performed here"
-
       - name: DAG image creation and airflow deployment
         if: always()
         uses: elgohr/Publish-Docker-Github-Action@master
