@@ -19,10 +19,10 @@ jobs:
           ref: testing
           token: ${{ secrets.G_TOKEN }}
 
-      - name: linting12345
+      - name: linting1
         uses: benc-uk/workflow-dispatch@v1
         with:
-          workflow: linting1
+          workflow: linting1234
           repo: vinothgitkumar/devint_dag_deployment
           ref: testing
           token: ${{ secrets.G_TOKEN }}
