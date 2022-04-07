@@ -21,7 +21,17 @@ jobs:
           username: _
           password: ${{ secrets.SA_PASS_KEY }}
           registry: registry.astronomer.condenast.io
-          
+
+      - name: Slack notification
+        if: always()
+        uses: ravsamhq/notify-slack-action@v1
+        with:
+          status: ${{ job.status }}
+          notification_title: 'Production branch creation workflow is waiting for the approval'
+          message_format: 'Approve the workflow in github actions'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
   branch_creation:
     runs-on: ubuntu-latest
     environment: 'prod-branch-creation'
