@@ -3,7 +3,7 @@ from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.version import version
-from datetime import datetime, timedelta # testline for appB-feature
+from datetime import datetime, timedelta # testline for the appB-feature
 
 
 def my_custom_function(ts,**kwargs):
